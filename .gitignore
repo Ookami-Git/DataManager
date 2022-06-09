@@ -65,6 +65,11 @@ writable/debugbar/*
 php_errors.log
 
 #-------------------------
+# Default DB
+#-------------------------
+writable/datamanager.db.*
+
+#-------------------------
 # User Guide Temp Files
 #-------------------------
 user_guide_src/build/*

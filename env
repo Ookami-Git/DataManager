@@ -46,6 +46,16 @@
 # database.default.DBDriver = MySQLi
 # database.default.DBPrefix =
 
+database.default.database = '../writable/datamanager.db.sqlite3'
+database.default.DBDriver = 'SQLite3'
+
+# database.default.hostname = localhost
+# database.default.database = datamanager
+# database.default.username = postgres
+# database.default.password = postgrespw
+# database.default.DBDriver = Postgre
+# database.default.port = 5432
+
 # database.tests.hostname = localhost
 # database.tests.database = ci4
 # database.tests.username = root
