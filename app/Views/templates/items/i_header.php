@@ -1,0 +1,1 @@
+<div class='ui <?=themeClass?> <?= $column?> column stackable grid'>
