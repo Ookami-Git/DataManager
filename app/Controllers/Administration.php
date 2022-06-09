@@ -56,8 +56,8 @@ class Administration extends BaseController
         );
         switch ($adminPage) {
             case "general":
-                $model = new Models\dbParameters();
-                $modelDm = new Models\dbDataManager();
+                $model = new Models\DbParameters();
+                $modelDm = new Models\DbDataManager();
                 $pages=$modelDm->select('name')->findAll();
                 $data=array(
                     "name"=>$model->where("name", "name")->first()['value'],
@@ -67,15 +67,15 @@ class Administration extends BaseController
                 );
                 break;
             case "authentification":
-                $model = new Models\dbParameters();
+                $model = new Models\DbParameters();
                 $ldap=$model->select('name, value')->where("name LIKE 'ldap%'")->findAll();
                 foreach($ldap as $ldapParameter) {
                     $data[$ldapParameter['name']]=$ldapParameter['value'];
                 }
                 break;
             case "groups":
-                $modelGrp = new Models\dbGroups();
-                $modelRole = new Models\dbRoles();
+                $modelGrp = new Models\DbGroups();
+                $modelRole = new Models\DbRoles();
                 $groups=$modelGrp->findAll();
                 foreach($groups as $key=>$group) {
                     $groups[$key]['users']=array();
@@ -86,9 +86,9 @@ class Administration extends BaseController
                 $data=array("groups"=>$groups);
                 break;
             case "group":
-                $modelUsr = new Models\dbUsers();
-                $modelGrp = new Models\dbGroups();
-                $modelRole = new Models\dbRoles();
+                $modelUsr = new Models\DbUsers();
+                $modelGrp = new Models\DbGroups();
+                $modelRole = new Models\DbRoles();
                 $users=$modelUsr->select('username')->findAll();
                 $group=$modelGrp->where("groupname",$option)->first();
                 $groups=array_flatten_with_dots($modelGrp->select('groupname')->findAll());
@@ -101,12 +101,12 @@ class Administration extends BaseController
                 );
                 break;
             case "user":
-                $modelUsr = new Models\dbUsers();
+                $modelUsr = new Models\DbUsers();
                 $user=$modelUsr->where("username",$option)->first();
                 $users=array_flatten_with_dots($modelUsr->select('username')->findAll());
-                $modelGrp = new Models\dbGroups();
+                $modelGrp = new Models\DbGroups();
                 $groups=$modelGrp->select('groupname')->findAll();
-                $modelRole = new Models\dbRoles();
+                $modelRole = new Models\DbRoles();
                 $userRoles=array_flatten_with_dots($modelRole->select('groupname')->where("username",$option)->findAll());
                 $data=array(
                     "users"=>$users,
@@ -116,13 +116,13 @@ class Administration extends BaseController
                 );
                 break;
             case "users":
-                $modelUsr = new Models\dbUsers();
+                $modelUsr = new Models\DbUsers();
                 $users=$modelUsr->findAll();
-                $modelGrp = new Models\dbGroups();
+                $modelGrp = new Models\DbGroups();
                 $groups=$modelGrp->select('groupname')->findAll();
-                $modelParameters = new Models\dbParameters();
+                $modelParameters = new Models\DbParameters();
                 $ldap=boolval($modelParameters->select('value')->where("name","ldapEnable")->first()['value'])??false;
-                $modelRole = new Models\dbRoles();
+                $modelRole = new Models\DbRoles();
                 foreach($users as $key=>$user) {
                     $users[$key]['groups']=array();
                     foreach($modelRole->where("username", $user['username'])->findAll() as $group) {
@@ -136,10 +136,10 @@ class Administration extends BaseController
                 );
                 break;
             case "acl":
-                $modelGrp = new Models\dbGroups();
-                $modelUsr = new Models\dbUsers();
-                $modelAcl = new Models\dbAcl();
-                $model = new Models\dbDataManager();
+                $modelGrp = new Models\DbGroups();
+                $modelUsr = new Models\DbUsers();
+                $modelAcl = new Models\DbAcl();
+                $model = new Models\DbDataManager();
                 $users=$modelUsr->select('username')->findAll();
                 $groups=$modelGrp->select('groupname')->findAll();
                 $acl=$modelAcl->findAll();
@@ -157,7 +157,7 @@ class Administration extends BaseController
                 );
                 break;
             case "menu":
-                $model = new Models\dbDataManager();
+                $model = new Models\DbDataManager();
                 $pages=$model->select('name')->findAll();
                 $data=array(
                     "pages"=>$pages,
@@ -180,7 +180,7 @@ class Administration extends BaseController
                 );
                 break;
             case "item":
-                $model = new Models\dbDataManager();
+                $model = new Models\DbDataManager();
                 $result = $model->where('name', $name)->first();
                 $sources=array();
                 if (isset($result['source'])) {
@@ -205,7 +205,7 @@ class Administration extends BaseController
                 );
                 break;
             case "presentation":
-                $model = new Models\dbDataManager();
+                $model = new Models\DbDataManager();
                 $result = $model->where('name', $name)->first();
                 $types=['separator'];
                 $items=array();
@@ -236,7 +236,7 @@ class Administration extends BaseController
     }
 
     function editorSelector() {
-        $model = new Models\dbDataManager();
+        $model = new Models\DbDataManager();
         $result = $model->orderBy('name', 'ASC')->findAll();
         $data = array(
             "data"=> $result
@@ -247,9 +247,9 @@ class Administration extends BaseController
 
     public function profile()
     {
-        $modelUsr = new Models\dbUsers();
+        $modelUsr = new Models\DbUsers();
         $user=$modelUsr->where("username",session()->get("username"))->first();
-        $modelRole = new Models\dbRoles();
+        $modelRole = new Models\DbRoles();
         $userRoles=array_flatten_with_dots($modelRole->select('groupname')->where("username",session()->get("username"))->findAll());
         $data=array(
             "user"=>$user,

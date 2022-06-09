@@ -10,7 +10,7 @@ class ApiDataManager extends ResourceController
     use ResponseTrait;
 
     public function index(){
-        $model = new Models\dbDataManager();
+        $model = new Models\DbDataManager();
         $data['datamanager'] = $model->orderBy('name', 'DESC')->findAll();
         return $this->respond($data);
     }
@@ -19,7 +19,7 @@ class ApiDataManager extends ResourceController
         if ($column == null) {
             return $this->failNotFound('Need more parameters : GET api/name/column');
         }
-        $model = new Models\dbDataManager();
+        $model = new Models\DbDataManager();
         $data = $model->where('name', $id)->first();
         if($data){
             return $this->respond($data[$column]);
@@ -30,7 +30,7 @@ class ApiDataManager extends ResourceController
 
     public function update($id = null){
         $input=$this->request->getRawInput();
-        $model = new Models\dbDataManager();
+        $model = new Models\DbDataManager();
         $id = $input['name'];
         $data = [
             $input['type']  => $input['value'],
@@ -48,11 +48,11 @@ class ApiDataManager extends ResourceController
 
     public function delete($id = null){
         $input=$this->request->getRawInput();
-        $model = new Models\dbDataManager();
+        $model = new Models\DbDataManager();
         $data = $model->where('name', $id)->delete($id);
         if($data){
             $model->delete($id);
-            $modelAcl = new Models\dbAcl();
+            $modelAcl = new Models\DbAcl();
             $modelAcl->delete($id);
             $response = [
                 'status'   => 200,
@@ -68,7 +68,7 @@ class ApiDataManager extends ResourceController
     }
 
     public function create($id = null){
-        $model = new Models\dbDataManager();
+        $model = new Models\DbDataManager();
         $data = [
             'name' => $this->request->getVar('name'),
             'source'  => $this->request->getVar('source'),

@@ -16,7 +16,7 @@ class FilterAcl implements FilterInterface
         // Check ACL
         $segments=$request->uri->getSegments();
         $page=end($segments);
-        $model = new Models\dbAcl();
+        $model = new Models\DbAcl();
         $acl = $model->where('page',$page)->first();
         $authorizedUsers = @json_decode($acl['users'],true)??array();
         $authorizedGroups = @json_decode($acl['groups'],true)??array();

@@ -13,7 +13,7 @@ class RundeckController extends BaseController
         $this->pageHeader();
         $themeClass = themeClass;
 
-        $model = new Models\dbParameters();
+        $model = new Models\DbParameters();
         $rdkInstances = json_decode($model->where('name','rundeck')->first()['value'],true)??array();
 
         foreach($rdkInstances['instances'] as $rdkInstance) {

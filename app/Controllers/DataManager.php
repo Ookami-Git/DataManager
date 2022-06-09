@@ -10,9 +10,9 @@ class DataManager extends BaseController
     {
         $this->pageHeader();
         if (!$descriptionName) {
-            $model = new Models\dbParameters();
+            $model = new Models\DbParameters();
             $descriptionName = $model->where("name", "defaultPage")->first()['value'];
-            $model = new Models\dbDataManager();
+            $model = new Models\DbDataManager();
             if (empty($descriptionName) || empty($model->where("name", $descriptionName)->first()['name'])) {
                 echo view("default.php");
             }

@@ -16,7 +16,7 @@ class ApiUser extends ResourceController
         $input=$this->request->getRawInput();
         if (isset($input['user'])) {
             $update=json_decode($input['user'],true);
-            $model = new Models\dbUsers();
+            $model = new Models\DbUsers();
             foreach($update as $key=>$value) {
                 if ($key == "password") {
                     $value = password_hash($value,PASSWORD_DEFAULT);

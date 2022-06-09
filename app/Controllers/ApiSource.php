@@ -10,7 +10,7 @@ class ApiSource extends ResourceController
     use ResponseTrait;
 
     public function show ($id = null) {
-        $model = new Models\dbDataManager();
+        $model = new Models\DbDataManager();
         $data = $model->where('name', $id)->first();
         if($data){
             return $this->respond($data['source']);
@@ -21,7 +21,7 @@ class ApiSource extends ResourceController
 
     public function update($id = null){
         $input=$this->request->getRawInput();
-        $model = new Models\dbDataManager();
+        $model = new Models\DbDataManager();
         $id = $input['name'];
         $data = [
             'source'  => $input['source'],

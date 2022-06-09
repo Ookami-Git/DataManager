@@ -10,13 +10,13 @@ class ApiParameters extends ResourceController
     use ResponseTrait;
 
     public function index(){
-        $model = new Models\dbParameters();
+        $model = new Models\DbParameters();
         $data['datamanager'] = $model->orderBy('name', 'DESC')->findAll();
         return $this->respond($data);
     }
 
     public function show ($id = null) {
-        $model = new Models\dbParameters();
+        $model = new Models\DbParameters();
         $data = $model->where('name', $id)->first();
         if($data){
             return $this->respond($data['value']);
@@ -30,7 +30,7 @@ class ApiParameters extends ResourceController
         if (isset($input['parameters'])) {
             $input=json_decode($input['parameters'],true);
             if (isset($input['acl'])) {
-                $model = new Models\dbAcl();
+                $model = new Models\DbAcl();
                 foreach($input['acl'] as $id => $acl) {
                     $data['page'] = $id;
                     if (isset($acl['users'])) {
@@ -45,7 +45,7 @@ class ApiParameters extends ResourceController
                 // Only one user but we need get username in array (key)
                 foreach($input['updateUser'] as $username => $update) {
                     if (isset($update['groups'])) {
-                        $model = new Models\dbRoles();
+                        $model = new Models\DbRoles();
                         $data = $model->where('username', $username)->delete();
                         foreach($update['groups'] as $group) {
                             $data=array(
@@ -56,7 +56,7 @@ class ApiParameters extends ResourceController
                         }
                     }
                     if (isset($update['password'])) {
-                        $model = new Models\dbUsers();
+                        $model = new Models\DbUsers();
                         $data['password']=password_hash($update['password'],PASSWORD_DEFAULT);
                         $model->update($username, $data);
                     }
@@ -65,7 +65,7 @@ class ApiParameters extends ResourceController
                 // Only one group but we need get groupname in array (key)
                 foreach($input['updateGroup'] as $groupname => $update) {
                     if (isset($update['users'])) {
-                        $model = new Models\dbRoles();
+                        $model = new Models\DbRoles();
                         $data = $model->where('groupname', $groupname)->delete();
                         foreach($update['users'] as $user) {
                             $data=array(
@@ -79,13 +79,13 @@ class ApiParameters extends ResourceController
                         }
                     }
                     if (isset($update['description'])) {
-                        $model = new Models\dbGroups();
+                        $model = new Models\DbGroups();
                         $data['description']=$update['description'];
                         $model->update($groupname, $data);
                     }
                 }
             } else {
-                $model = new Models\dbParameters();
+                $model = new Models\DbParameters();
                 foreach($input as $key=>$value) {
                     if ($key == "rundeck" || $key == "menu") {$value=json_encode($value);}
                     $data = [
@@ -116,9 +116,9 @@ class ApiParameters extends ResourceController
     public function delete($id = null, $type = null){
         switch ($type) {
             case "user":
-                $model = new Models\dbRoles();
+                $model = new Models\DbRoles();
                 $data = $model->where('username', $id)->delete();
-                $model = new Models\dbUsers();
+                $model = new Models\DbUsers();
                 $data = $model->where('username', $id)->delete($id);
                 if($data){
                     $model->delete($id);
@@ -135,9 +135,9 @@ class ApiParameters extends ResourceController
                 }
                 break;
             case "group":
-                $model = new Models\dbRoles();
+                $model = new Models\DbRoles();
                 $data = $model->where('groupname', $id)->delete();
-                $model = new Models\dbGroups();
+                $model = new Models\DbGroups();
                 $data = $model->where('groupname', $id)->delete($id);
                 if($data){
                     $model->delete($id);
@@ -164,7 +164,7 @@ class ApiParameters extends ResourceController
         if (isset($input['parameters'])) {
             $input=json_decode($input['parameters'],true);
             if (isset($input['addUser'])) {
-                $model = new Models\dbUsers();
+                $model = new Models\DbUsers();
                 $data=array(
                     "username"      =>$input['addUser']['username'],
                     "connection"    =>$input['addUser']['connection'],
@@ -173,7 +173,7 @@ class ApiParameters extends ResourceController
                     $data['password']=password_hash($input['addUser']['password'],PASSWORD_DEFAULT);
                 }
                 $model->insert($data);
-                $model = new Models\dbRoles();
+                $model = new Models\DbRoles();
                 foreach($input['addUser']['groups'] as $group) {
                     $data=array(
                         "username"      =>$input['addUser']['username'],
@@ -183,7 +183,7 @@ class ApiParameters extends ResourceController
                 }
             }
             if (isset($input['addGroup'])) {
-                $model = new Models\dbGroups();
+                $model = new Models\DbGroups();
                 $data=array(
                     "groupname"      =>$input['addGroup']['groupname'],
                     "description"      =>$input['addGroup']['description']??null,

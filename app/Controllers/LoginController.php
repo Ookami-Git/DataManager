@@ -16,7 +16,7 @@ class LoginController extends BaseController
   
     public function signin() {
         $session = session();
-        $model = new Models\dbUsers();
+        $model = new Models\DbUsers();
 
         $username = $this->request->getVar('username');
         $password = $this->request->getVar('password');
@@ -30,7 +30,7 @@ class LoginController extends BaseController
                     $pwd_verify = password_verify($password, $pass);
                     break;
                 case "ldap":
-                    $modelParameters = new Models\dbParameters();
+                    $modelParameters = new Models\DbParameters();
                     $ldap = $modelParameters->where('name', 'ldapEnable')->first();
                     if (!$ldap['value']) {
                         $session->setFlashdata('msg', "L'authentification LDAP n'est pas activé dans les paramètres de l'application.<br>Utilisez un compte local ou contactez votre administrateur.");
@@ -71,7 +71,7 @@ class LoginController extends BaseController
 
             if($pwd_verify){
                 //GET USER GROUPS
-                $modelrole = new Models\dbRoles();
+                $modelrole = new Models\DbRoles();
                 $roles=array_flatten_with_dots($modelrole->select('groupname')->where('username', $username)->findall());
                 $ses_data = [
                     'username' => $data['username'],

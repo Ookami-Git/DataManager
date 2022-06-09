@@ -3,7 +3,7 @@
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
-use App\Models\dbRoles;
+use App\Models\DbRoles;
 
 class FilterAdmin implements FilterInterface
 {
