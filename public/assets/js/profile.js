@@ -29,7 +29,7 @@ function save() {
     var theUrl;
     let params = new URLSearchParams();
     params.set("user",JSON.stringify(data));
-    theUrl=`/api/user/update`;
+    theUrl=`${document.baseUrl}/api/user/update`;
     //PREPARE AND EXECUTE REQUEST
     var xmlhttpUpdate = new XMLHttpRequest();
     xmlhttpUpdate.onreadystatechange = function() {

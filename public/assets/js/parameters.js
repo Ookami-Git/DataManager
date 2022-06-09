@@ -39,7 +39,7 @@ function save() {
     var theUrl;
     let params = new URLSearchParams();
     params.set("parameters",JSON.stringify(data));
-    theUrl=`/api/parameters/update`;
+    theUrl=`${document.baseUrl}/api/parameters/update`;
     //PREPARE AND EXECUTE REQUEST
     var xmlhttpUpdate = new XMLHttpRequest();
     xmlhttpUpdate.onreadystatechange = function() {
@@ -99,7 +99,7 @@ function datamanagerAdd() {
     var theUrl;
     let params = new URLSearchParams();
     params.set("parameters",JSON.stringify(data));
-    theUrl=`/api/parameters`;
+    theUrl=`${document.baseUrl}/api/parameters`;
     //PREPARE AND EXECUTE REQUEST
     var xmlhttpUpdate = new XMLHttpRequest();
     xmlhttpUpdate.onreadystatechange = function() {
@@ -134,7 +134,7 @@ function datamanagerRemove(button,id,type){
             click: function() {
                 //Set parameters and url
                 var theUrl;
-                theUrl=`/api/parameters/${id}/${type}`;
+                theUrl=`${document.baseUrl}/api/parameters/${id}/${type}`;
                 //PREPARE AND EXECUTE REQUEST
                 var xmlhttpUpdate = new XMLHttpRequest();
                 xmlhttpUpdate.onreadystatechange = function() {
