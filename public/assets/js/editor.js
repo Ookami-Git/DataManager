@@ -465,7 +465,7 @@ function readPresentation(name) {
                 $(".presLabel:last:visible").val(presentation.parameters.label);
                 $(".presIcon:last:visible").val(presentation.parameters.icon);
                 $(".presColumn:last:visible").val(presentation.parameters.column);
-                $(".pageSelector:last:visible").val(presentation.parameters.page);
+                $(".pageSelector:last:visible").dropdown('set selected', presentation.parameters.page).change();
                 if (presentation.parameters.segment) {$(".pageSegment:last").attr( 'checked', true );}
                 if (typeof presentation.parameters.items !== 'undefined') {
                     presentation.parameters.items.forEach(function (item) {
