@@ -6,7 +6,7 @@
                 <label>Activer LDAP</label>
             </div>
         </div>
-        <div class="ui horizontal divider">
+        <div class="ui <?=themeClass?> horizontal divider">
             Serveur et recherche
         </div>
         <div class="four fields">
@@ -27,7 +27,7 @@
                 <input type="text" name="[ldapFilter]" placeholder="samaccountname, mail, dn ..." value="<?=$ldapFilter?>">
             </div>
         </div>
-        <div class="ui horizontal divider">
+        <div class="ui <?=themeClass?> horizontal divider">
             SSL/TLS
         </div>
         <div class="four fields">
@@ -44,7 +44,7 @@
                 </div>
             </div>  
         </div> 
-        <div class="ui horizontal divider">
+        <div class="ui <?=themeClass?> horizontal divider">
             Authentification
         </div>
         <div class="four fields">
