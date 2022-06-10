@@ -355,7 +355,7 @@ function readItem(name) {
             description.items.forEach(function(item){
                 $(".btnAddItem:last").click();
                 $(".itemName:last").val(item.title.label).change();
-                $(".itemColor:last").val(item.title.color).change();
+                $(".itemColor:last").dropdown('set selected', item.title.color).change();
                 if (item.title.hide) {$(".itemHideRibbon:last").attr( 'checked', true );}
                 $(".typeSelector:last").dropdown('set selected', item.type).change();
 
