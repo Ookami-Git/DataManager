@@ -18,7 +18,7 @@ class LoginController extends BaseController
         $session = session();
         $model = new Models\DbUsers();
 
-        $username = $this->request->getVar('username');
+        $username = trim($this->request->getVar('username'));
         $password = $this->request->getVar('password');
         
         $data = $model->where('username', $username)->first();
@@ -31,8 +31,8 @@ class LoginController extends BaseController
                     break;
                 case "ldap":
                     $modelParameters = new Models\DbParameters();
-                    $ldap = $modelParameters->where('name', 'ldapEnable')->first();
-                    if (!$ldap['value']) {
+                    $ldap = $modelParameters->where('name', 'ldapEnable')->first()['value'];
+                    if (!$ldap) {
                         $session->setFlashdata('msg', "L'authentification LDAP n'est pas activé dans les paramètres de l'application.<br>Utilisez un compte local ou contactez votre administrateur.");
                         return redirect()->to(base_url().'/login');
                     }
@@ -40,30 +40,63 @@ class LoginController extends BaseController
                         $session->setFlashdata('msg', "Le module PHP LDAP n'est pas installé ou configuré sur ce serveur.<br>Utilisez un compte local ou contactez votre administrateur.");
                         return redirect()->to(base_url().'/login');
                     }
-                    $authLdap = new AuthLdap();
-                    if (is_object($authLdap) && method_exists($authLdap, 'authenticate')) {
-                        $ldapConfig=array(
-                            "baseDn"=>"dc=example,dc=com",
-                            "ldapDomain"=>"ldap.forumsys.com",
-                            "usrTls"=>false,
-                            "tcpPort"=>389
-                        );
-                        $authLdap->setConfig($ldapConfig);
-                        $authenticatedUserData = $authLdap->authenticate(
-                                                    trim($username),
-                                                    trim($password)
-                                                );
-                        if (!empty($authenticatedUserData))
-                        {
+
+                    $ldapDMInfo=$modelParameters->select('name, value')->where("name LIKE 'ldap%'")->findAll();
+                    foreach($ldapDMInfo as $ldapParameter) {
+                        $ldapConfig[$ldapParameter['name']]=$ldapParameter['value'];
+                    }
+
+                    if (!$ldapConfig['ldapCheckCert']) {
+                        putenv('LDAPTLS_REQCERT=never'); //Ignore TLS Certificat
+                    }
+
+                    if ($ldapConfig['ldapSsl']) {
+                        $ldapProtocole="ldaps";
+                    } else {
+                        $ldapProtocole="ldap";
+                    }
+
+                    $ldapconn = ldap_connect("{$ldapProtocole}://{$ldapConfig['ldapHost']}",$ldapConfig['ldapPort']);
+
+                    if ($ldapconn) {
+                        ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
+                        ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
+                        if (!$ldapConfig['ldapAnonymous']) { //Non anonymous auth LDAP
+                            $ldapbind = @ldap_bind($ldapconn, $ldapConfig['ldapUser'], $ldapConfig['ldapPassword']);
+                            // Vérification de l'authentification
+                            if (!$ldapbind) {
+                                $session->setFlashdata('msg', "Configuration des paramètres LDAP incorrecte. Contactez votre administrateur.");
+                                return redirect()->to(base_url().'/login');
+                            }
+                        }
+
+                        if (!empty($ldapConfig['ldapFilter'])) { //Filter -> Search DN USER
+
+                            $sr = ldap_search($ldapconn, $ldapConfig['ldapBaseDN'], "{$ldapConfig['ldapFilter']}={$username}");
+
+                            $info = ldap_get_entries($ldapconn, $sr);
+                            if (!$info) {
+                                $session->setFlashdata('msg', "Problème rencontré lors de la recherche LDAP.");
+                                return redirect()->to(base_url().'/login');
+                            }
+                            if ($info['count'] == 0) {
+                                $session->setFlashdata('msg', "Utilisateur introuvable sur le serveur LDAP.");
+                                return redirect()->to(base_url().'/login');
+                            }
+                            $username = $info[0]['dn'];
+                        }
+
+                        $ldapUserBind = @ldap_bind($ldapconn, $username, $password);
+
+                        if (!$ldapUserBind) {
+                            $session->setFlashdata('msg', 'Mot de passe incorrect.');
+                            return redirect()->to(base_url().'/login');
+                        } else {
                             $pwd_verify = true;
                         }
-                        else {
-                            $session->setFlashdata('msg', 'Compte ou mot de passe incorrect.');
-                            return redirect()->to(base_url().'/login');
-                        }
-                    }
-                    else {
-                        $session->setFlashdata('msg', "Erreur module LDAP.<br>Utilisez un compte local ou contactez votre administrateur.");
+
+                    } else {
+                        $session->setFlashdata('msg', 'Erreur de communication avec le serveur LDAP.');
                         return redirect()->to(base_url().'/login');
                     }
                     break;

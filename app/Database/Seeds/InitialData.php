@@ -72,12 +72,37 @@ class InitialData extends Seeder
         ];
         $this->db->table('parameters')->insert($data);
         $data = [
+            'name'          => 'ldapCheckCert',
+            'value'         => False
+        ];
+        $this->db->table('parameters')->insert($data);
+        $data = [
             'name'          => 'ldapHost',
             'value'         => ''
         ];
         $this->db->table('parameters')->insert($data);
         $data = [
             'name'          => 'ldapBaseDN',
+            'value'         => ''
+        ];
+        $this->db->table('parameters')->insert($data);
+        $data = [
+            'name'          => 'ldapFilter',
+            'value'         => ''
+        ];
+        $this->db->table('parameters')->insert($data);
+        $data = [
+            'name'          => 'ldapAnonymous',
+            'value'         => true
+        ];
+        $this->db->table('parameters')->insert($data);
+        $data = [
+            'name'          => 'ldapUser',
+            'value'         => ''
+        ];
+        $this->db->table('parameters')->insert($data);
+        $data = [
+            'name'          => 'ldapPassword',
             'value'         => ''
         ];
         $this->db->table('parameters')->insert($data);

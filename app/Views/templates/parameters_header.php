@@ -7,7 +7,7 @@
             if (in_array($page,$item['page'])) { $class = "active";} else { $class=null;}
             if (isset($item['icon'])) { $icon = "<i class='{$item['icon']} icon'></i>";} else { $icon=null;}
         ?>
-            <a class="item <?=$class?>" href="<?=$item['href']?>"><?=$icon?><?=$item['label']?></a>
+            <a class="item <?=$class?>" href="<?=base_url($item['href'])?>"><?=$icon?><?=$item['label']?></a>
         <?php endforeach?>
         </div>
     </div>
