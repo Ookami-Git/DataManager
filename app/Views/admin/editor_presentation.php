@@ -71,6 +71,8 @@
             </div>  
             <br>
             <div class="ui <?=themeClass?> basic icon buttons">
+                <div class="ui <?=themeClass?> button" onclick="alter_order($(this),'up','.presentation');"><i class="angle up icon"></i></div>
+                <div class="ui <?=themeClass?> button" onclick="alter_order($(this),'down','.presentation');"><i class="angle down icon"></i></div>
                 <div class="ui <?=themeClass?> compact labeled icon button" onclick="deletediv($(this),'.presentation','le visuel de type '+$(this).closest('.presentation').find('.typeSelector').val())"><i class="minus icon"></i><label>Supprimer le visuel</label></div>
             </div>
         </div>

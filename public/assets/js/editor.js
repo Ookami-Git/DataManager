@@ -56,7 +56,7 @@ function save() {
     params.set("value",JSON.stringify(data));
     params.set("type",type);
     params.set(type,JSON.stringify(data));
-    theUrl=`/api/datamanager/${descName}/${type}`;
+    theUrl=`${document.baseUrl}/api/datamanager/${descName}/${type}`;
     //PREPARE AND EXECUTE REQUEST
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.params = params;
@@ -458,7 +458,7 @@ function readPresentation(name) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            description=JSON.parse(this.response)
+            description=JSON.parse(JSON.stringify(this.response))
             description.presentation.forEach(function(presentation){
                 $(".btnAddPresentation:last").click();
                 $(".typeSelector:last").dropdown('set selected', presentation.type).change();

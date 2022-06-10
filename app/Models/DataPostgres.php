@@ -18,7 +18,7 @@ class DataPostgres extends DataModel {
             "label"=>"Port",
             "type"=>"number",
             "require"=>true,
-            "default"=>3306
+            "default"=>5432
         ),
         "dbname"=>array(
             "label"=>"Nom de la base de données",
@@ -42,13 +42,13 @@ class DataPostgres extends DataModel {
 
         if (!isset($sourceParameters['password'])) $sourceParameters['password']=null;
 
-        $db = new PDO("postgres:host={$sourceParameters['host']};port={$sourceParameters['port']};dbname={$sourceParameters['dbname']};", $sourceParameters['user'], $sourceParameters['password']);
+        $db = new \PDO("pgsql:host={$sourceParameters['host']};port={$sourceParameters['port']};dbname={$sourceParameters['dbname']};", $sourceParameters['username'], $sourceParameters['password']);
 
         foreach($db->query($sourceParameters['query']) as $row) {
             $dataResult[]=$row;
         }
         
         if ($dataResult === null) {throw new Exception("Failed to load {$sourceParameters['path']}");}
-        return $dataResult;
+        $this->dataResult = $dataResult;
     }
 }

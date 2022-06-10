@@ -26,7 +26,7 @@ class DataXml extends DataModel {
             $stream_context = null;
         };
 
-        $dataResult = $this->object_to_array(new SimpleXMLElement(file_get_contents($sourceParameters['path'],false,stream_context_create($stream_context))));
+        $dataResult = $this->object_to_array(new \SimpleXMLElement(file_get_contents($sourceParameters['path'],false,stream_context_create($stream_context))));
             
         if ($dataResult === null) {throw new Exception("Failed to load {$sourceParameters['path']}");}
 

@@ -48,13 +48,13 @@ class DataMysql extends DataModel {
 
         if (!isset($sourceParameters['password'])) $sourceParameters['password']=null;
 
-        $db = new PDO("mysql:host={$sourceParameters['host']};port={$sourceParameters['port']};dbname={$sourceParameters['dbname']};charset={$sourceParameters['charset']}", $sourceParameters['user'], $sourceParameters['password']);
+        $db = new \PDO("mysql:host={$sourceParameters['host']};port={$sourceParameters['port']};dbname={$sourceParameters['dbname']};charset={$sourceParameters['charset']}", $sourceParameters['username'], $sourceParameters['password']);
 
         foreach($db->query($sourceParameters['query']) as $row) {
             $dataResult[]=$row;
         }
 
         if ($dataResult === null) {throw new Exception("Failed to load {$sourceParameters['path']}");}
-        return $dataResult;
+        $this->dataResult = $dataResult;
     }
 }
