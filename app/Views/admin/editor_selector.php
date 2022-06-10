@@ -25,7 +25,7 @@
         <tfoot>
             <tr>
                 <th><div class="ui <?=themeClass?> form"> <div class="field"> <input id="newpage" class="nospace" placeholder="New Name" type="text"></div></div></th>
-                <th><div class="ui <?=themeClass?> positive icon button" onclick="if($(this).closest('tr').find('#newpage').val() != '') {window.location.href = '/editor/'+$(this).closest('tr').find('#newpage').val()+'/source'};"><i class="plus icon"></i></div></th>
+                <th><div class="ui <?=themeClass?> positive icon button" onclick="if($(this).closest('tr').find('#newpage').val() != '') {window.location.href = '<?=base_url()?>/editor/'+$(this).closest('tr').find('#newpage').val()+'/source'};"><i class="plus icon"></i></div></th>
             </tr>
         </tfoot>
     </table>
