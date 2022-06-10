@@ -30,6 +30,7 @@ class LoginController extends BaseController
                     $pwd_verify = password_verify($password, $pass);
                     break;
                 case "ldap":
+                    $ldapUser=$username;
                     $modelParameters = new Models\DbParameters();
                     $ldap = $modelParameters->where('name', 'ldapEnable')->first()['value'];
                     if (!$ldap) {
@@ -72,7 +73,7 @@ class LoginController extends BaseController
 
                         if (!empty($ldapConfig['ldapFilter'])) { //Filter -> Search DN USER
 
-                            $sr = ldap_search($ldapconn, $ldapConfig['ldapBaseDN'], "{$ldapConfig['ldapFilter']}={$username}");
+                            $sr = ldap_search($ldapconn, $ldapConfig['ldapBaseDN'], "{$ldapConfig['ldapFilter']}={$ldapUser}");
 
                             $info = ldap_get_entries($ldapconn, $sr);
                             if (!$info) {
@@ -83,10 +84,10 @@ class LoginController extends BaseController
                                 $session->setFlashdata('msg', "Utilisateur introuvable sur le serveur LDAP.");
                                 return redirect()->to(base_url().'/login');
                             }
-                            $username = $info[0]['dn'];
+                            $ldapUser = $info[0]['dn'];
                         }
 
-                        $ldapUserBind = @ldap_bind($ldapconn, $username, $password);
+                        $ldapUserBind = @ldap_bind($ldapconn, $ldapUser, $password);
 
                         if (!$ldapUserBind) {
                             $session->setFlashdata('msg', 'Mot de passe incorrect.');
