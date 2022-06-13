@@ -38,7 +38,7 @@ class DataXml extends DataModel {
             $ret = (array) $obj;
             foreach($ret as &$item) {
                 //recursively process EACH element regardless of type
-                $item = object_to_array($item);
+                $item = $this->object_to_array($item);
             }
             return $ret;
         } else {
