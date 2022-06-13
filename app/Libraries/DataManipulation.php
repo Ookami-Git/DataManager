@@ -7,6 +7,7 @@ use App\Models;
 class DataManipulation
 {
     private $description;
+    private $getDescriptionSource;
     private $preview=false;
     #For RAW Data
     private $data=array();
@@ -66,8 +67,14 @@ class DataManipulation
                 $pattern=preg_replace('/\:loop\:/i', $this->loop, $pattern);
                 $result=$this->search($pattern);
                 break;
+            #Return theme css class
+            case ":theme:":
+                $result=themeClass;
+                break;
+            #Search value in data
             default:
-                if (isset($this->data[$dataGroup])) {
+                if (!isset($this->data[$dataGroup])) {$this->rawDataGenerator($this->getDescriptionSource,$dataGroup);} //If group is not load -> try load it
+                if (isset($this->data[$dataGroup])) { // if group exist
                     if (is_null($dataPath) || empty($dataPath)) {
                         $result=$this->data[$dataGroup]->getAllData();
                     } else {
@@ -75,6 +82,7 @@ class DataManipulation
                     }
                 }
         }
+        if (trim($result,'{}') == $pattern) {$result = null;}
         return $result;
     }
 
@@ -154,10 +162,14 @@ class DataManipulation
         return $data;
     }
 
-    public function rawDataGenerator($getDescriptionSource) {
+    public function rawDataGenerator($getDescriptionSource,$onlyThisSource=null) {
+        $this->getDescriptionSource = $getDescriptionSource;
         $descriptionSource = json_decode($this->description->where(['name' => $getDescriptionSource])->first()['source']??null,true);
         $descriptionSource = $descriptionSource['sources']??array();
         foreach ($descriptionSource as $sourceDescription) {
+            if ($onlyThisSource && $sourceDescription['name'] != $onlyThisSource) {
+                continue;
+            }
             #Init data var to type object
             $this->data[$sourceDescription['name']]=$this->initType($sourceDescription['type']);
             #If loop, init $loop and $loopKey values

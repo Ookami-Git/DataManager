@@ -19,7 +19,7 @@ class DataHelper extends BaseController
         defined('themeClass')          || define('themeClass', $themeClass); //THEME CLASS
 
         $data = New DataManipulation();
-        $data->rawDataGenerator($descriptionName);
+        $data->rawDataGenerator($descriptionName,$sourceName);
         $data->displaySourcePattern($sourceName);
     }
 }
