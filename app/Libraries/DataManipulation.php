@@ -90,7 +90,7 @@ class DataManipulation
         foreach ($conditions as $condition) {
             $testValue=$this->search($condition['data']);
             if (isset($condition['regex'])) {
-                $condition['regex']=searchAndReplace($condition['regex']);
+                $condition['regex']=$this->searchAndReplace($condition['regex']);
                 if (is_array($testValue)) {
                     $testResult=!empty(preg_grep("/{$condition['regex']}/",$testValue));
                 } else { 
