@@ -4,6 +4,8 @@ window.onload = function() {
     $('.ui.dropdown').dropdown();
     //Active les checkbox
     $('.ui.checkbox').checkbox();
+    //Activer le tri
+    $('table .sortable').tablesort();
 
     //Charge la page par défaut
     labelcolor();
