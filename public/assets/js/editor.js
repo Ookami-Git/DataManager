@@ -308,7 +308,7 @@ function readFilters(loopItem) {
         }
         if (typeof filter.condition !== 'undefined') {
             $(".btnAddFilterCond:last").click();
-            $(".filterCondition:last").val(filter.condition);
+            $(".filterCondition:last").dropdown('set selected',filter.condition).change();
             $(".filterValue:last").val(filter.value);
         }
         $(".filterData:last").val(filter.data);
