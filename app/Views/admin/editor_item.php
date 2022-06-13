@@ -333,14 +333,15 @@
     <p>Chaque variable doit être placée dans des balises <code>{}</code>. La variable est composée de la manière suivante : <code>{NOM_SOURCE.chemin}</code></p>
     <p>Voici la liste des valeurs spéciales que peut contenir une balise :</p>
     <ul>
-        <li><code>{:GET:varName}</code> Récupère la variable dans l'URL (<code>https://site/path?varName=value</code>).</li>
+        <li><code>{:GET:.varName}</code> Récupère la variable dans l'URL (<code>https://site/path?varName=value</code>).</li>
         <li><code>{:LOOP:...}</code> Lorsqu'une boucle est active <code>:LOOP:</code> comprend la base de la boucle ainsi que la clé de la boucle <code>:KEY:</code></li>
         <li><code>{:KEY:}</code> Lorsque une boucle est active <code>:KEY:</code> contient la clé de la boucle. La variable spéciale <code>:KEY:</code> peut être placé n'importe où dans la balise.</li>
+        <li><code>{:THEME:}</code> Renvois la classe CSS du theme de l'utilisateur. Permet de garder une cohérence dans l'affichage HTML.</li>
     </ul>
 </template>
 
-<div class="ui <?=themeClass?> longer modal helper">
-    <div class="header">
+<div class="ui <?=themeClass?> longer fullscreen modal helper">
+    <div class="header classicmain <?=themeClass?>">
         <form class="ui <?=themeClass?> form">
             <div class="fields">
                 <div class="field">
@@ -375,7 +376,7 @@
             </div>
         </form>
     </div>
-    <div class="scrolling content">
+    <div class="scrolling content classicmain <?=themeClass?>">
         <div id="requiredGet"></div>
         <div id="sourceHelper">
         </div>

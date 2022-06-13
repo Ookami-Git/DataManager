@@ -9,7 +9,7 @@
     <tbody>
         <?php foreach ($source as $path => $value):?>
         <tr>
-            <td class="collapsing"><div class="ui <?=themeClass?> mini icon button" onclick="navigator.clipboard.writeText('{<?=$path?>}');"><i class="copy icon"></i></div></td>
+            <td class="collapsing"><div class="ui <?=themeClass?> mini icon button" onclick="navigator.clipboard.writeText('{<?=$path?>}');$('.ui.modal.longer.helper').modal('hide');"><i class="copy icon"></i></div></td>
             <td>{<?=$path?>}</td>
             <td><?=$value?></td>
         </tr>
