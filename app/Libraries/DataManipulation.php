@@ -82,7 +82,7 @@ class DataManipulation
                     }
                 }
         }
-        if (trim($result,'{}') == $pattern) {$result = null;}
+        if (is_tring($result) && preg_match_all(REGPATTERN, $result) && trim($result,'{}') == $pattern) {$result = null;} //If input == output and already have regexpattern then return empty for break infinity loop
         return $result;
     }
 
