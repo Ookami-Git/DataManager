@@ -123,12 +123,14 @@ class DataManipulation
                         if (!is_array($conditionValue)) {
                             $conditionValue = explode(" ", $conditionValue);
                         }
-                        if (in_array($testValue,$conditionValue)) $testResult=true;
+                        if (in_array($testValue,array_flatten_with_dots($conditionValue))) $testResult=true;
+                        break;
                     case "NOT IN":
                         if (!is_array($conditionValue)) {
                             $conditionValue = explode(" ", $conditionValue);
                         }
-                        if (!in_array($testValue,$conditionValue)) $testResult=true;
+                        if (!in_array($testValue,array_flatten_with_dots($conditionValue))) $testResult=true;
+                        break;
                 }
             }
             if ($testResult != $condition['expected']) {
