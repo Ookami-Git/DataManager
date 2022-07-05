@@ -4,7 +4,7 @@
         <div class='ui <?=themeClass?> <?= esc($title['color']) ?> ribbon label'><?= esc($title['label']) ?></div>
         <br>
         <?php endif ?>
-        <table class="ui <?=themeClass?> selectable sortable table basic tablesearch tablesort">
+        <table id="<?= esc(str_replace(' ', '', $title['label'])) ?>" class="ui <?=themeClass?> selectable sortable table basic tablesearch tablesort tableexport <?= esc(str_replace(' ', '', $title['label'])) ?>">
             <thead>
                 <tr>
                 <?php foreach ($data['header'] as $column): ?>

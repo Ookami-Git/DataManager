@@ -15,7 +15,12 @@ window.onload = function() {
         document.getElementById("searchengine").style.display = ""; 
     }
     var elementExists = document.getElementsByClassName("tableexport");
-    if (elementExists.length > 0) { 
+    if (elementExists.length > 0) {
+        for (i = 0; i < elementExists.length; i++) {
+            var div_tpl=$("#tpl_itemMenuExport")[0].innerHTML;
+            $("#menuExportTable").append(div_tpl);
+            $(".exportTitle:last").text(elementExists[i].id);
+        }
         document.getElementById("btnExport").style.display = ""; 
     }
     var elementExists = document.getElementsByClassName("tablevisibility");
@@ -48,71 +53,6 @@ window.onload = function() {
     }
 }
 
-// function change_theme() {
-//     switch (document.theme) {
-//         case "dark":
-//             $(".ui").not(".ignore_dark_mode").addClass("inverted");
-//             var logo = $('.logo').attr('src');
-//             $('.logo').attr('src',logo.replace("light","dark"));
-//             break;
-//         case "light":
-//             $(".inverted").not(".ignore_dark_mode").removeClass("inverted");
-//             $(".dark_mode_toggle:checkbox").prop("checked", false);
-//             var logo = $('.logo').attr('src');
-//             $('.logo').attr('src',logo.replace("dark","light"));
-//             break;
-//     };
-// }
-
-//Gestion du menu selectionné
-/* function menu_active_item(item) {
-    SelectedElement = document.getElementsByClassName("itemmenu");
-    for (t = 0; t < SelectedElement.length; t++) {
-        SelectedElement[t].classList.remove('active');
-    }
-    document.getElementsByClassName(item)[0].classList.add('active');
-} */
-/*
-//Permet de charger les différentes pages
-function load_content(page,parameter) {
-    $( "#contentDisplay" ).load( "loader.html" , function () {
-        $("#contentDisplay" ).load( "pages/"+page , parameter, function () {
-            var elementExists = document.getElementsByClassName("tablesearch");
-            if (elementExists.length > 0) { 
-                document.getElementById("searchengine").style.display = ""; 
-            }
-            var elementExists = document.getElementsByClassName("tableexport");
-            if (elementExists.length > 0) { 
-                document.getElementById("btnExport").style.display = ""; 
-            }
-            var elementExists = document.getElementsByClassName("tablevisibility");
-            if (elementExists.length > 0) { 
-                document.getElementById("divVisibility").style.display = ""; 
-            }
-            if (document.getElementsByClassName("calendarreload").length > 0) {
-                var queryParams = new URLSearchParams(window.location.search);
-                var selected_date = null;
-                if (queryParams.has("date")) {
-                    selected_date=new Date(parseInt(queryParams.get("date")));
-                }
-                $('#divCalendar').calendar({type: 'date', onChange: function() {
-                    url=window.location.href;
-                    selected_date=Date.parse(document.getElementById('inputCalendar').value);
-                    if (selected_date !== "NaN") {
-                        // Construct URLSearchParams object instance from current URL querystring.
-                        var queryParams = new URLSearchParams(window.location.search);
-                        // Set new or modify existing parameter value. 
-                        queryParams.set("date", selected_date);
-                        location.search=queryParams.toString();
-                        //history.pushState(null, null, "?"+queryParams.toString());
-                    }
-                }, initialDate: selected_date, today: true});
-                document.getElementById("divCalendar").style.display = ""; 
-            }
-        });
-    });
-}
-*/
 //Affiche ou cache tous les tr avac la class trhide
 function tr_visibility(classid) {
     var i;

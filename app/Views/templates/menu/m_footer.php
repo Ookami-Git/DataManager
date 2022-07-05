@@ -18,8 +18,11 @@
         </div>
 
         <script type="text/javascript" src="<?=base_url('assets/js/table2csv.js')?>"></script>
-        <div id="btnExport" class="item" style="display: none;">
-            <button class="ui <?=themeClass?> primary mini button" onclick="$('.tableexport').table2csv({ filename: 'export.csv', separator: ';',  newline: '\n',  quoteFields: true,  excludeColumns: '.access_column',  excludeRows: ''});"><i class="download icon"></i> Export</button>
+
+        <div  id="btnExport" class="ui dropdown icon item <?=themeClass?>" style="display: none;">
+            <i class="download icon"></i>
+            <div id="menuExportTable" class="menu">
+            </div>
         </div>
 
         <div class="ui <?=themeClass?> dropdown icon item">
@@ -38,3 +41,7 @@
         </div>
     </div>
 </div>
+
+<template id="tpl_itemMenuExport">
+    <a class="item" onclick="$('.tableexport.'+$(this).find('.exportTitle').text()).table2csv({ filename: 'export_'+$(this).find('.exportTitle').text()+'.csv', separator: ';',  newline: '\n',  quoteFields: true,  excludeColumns: '.access_column',  excludeRows: ''});">Export CSV <span class="exportTitle">id<span></a>
+</template>
