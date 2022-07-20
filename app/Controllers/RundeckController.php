@@ -243,7 +243,7 @@ class RundeckController extends BaseController
             $rdkDataRow['job_group'] = $row['job_group'];
             $rdkDataRow['job_name'] = $row['job_name'];
             date_default_timezone_set('UTC');
-            $avg = $rdkDataRow['avg'] = date('G\h i\m\n s\s', $row['avg_ms']/1000) ;
+            $avg = $rdkDataRow['avg'] = date('G\h i\m\n s\s', intval($row['avg_ms'])/1000) ;
             date_default_timezone_set('Europe/Paris');
             // On ajoute date(Z) pour passer du timestamp (UTC) rundeck vers notre fuseau horaire (Europe/Paris)
             $human_date = (int)($row['launch_sec'] / 1000) + date('Z') ;
