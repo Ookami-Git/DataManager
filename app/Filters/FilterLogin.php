@@ -10,7 +10,7 @@ class FilterLogin implements FilterInterface
     {
         helper('uri');
         if (!session()->get("isSignedIn")) { 
-            session()->set('previousUrl',uri_string().$_SERVER['REQUEST_URI']);
+            session()->set('previousUrl',$_SERVER['REQUEST_URI']);
             return redirect()->to(base_url()."/login");
         }
     }
