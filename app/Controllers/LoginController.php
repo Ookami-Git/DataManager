@@ -89,7 +89,7 @@ class LoginController extends BaseController
 
                         $ldapUserBind = @ldap_bind($ldapconn, $ldapUser, $password);
 
-                        if (!$ldapUserBind) {
+                        if (!$ldapUserBind || empty($password)) {
                             $session->setFlashdata('msg', 'Mot de passe incorrect.');
                             return redirect()->to(base_url().'/login');
                         } else {
