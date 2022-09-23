@@ -258,12 +258,14 @@ function readAddMenu(item,level=0) {
             if (level == 0) {
                 $('#addGrp').click();
             } else {
-                $('.addGrp:last').click();
+                $(`.itemGroup.level${level}:last`).find('.addGrp').click();
             }
+            console.log($('.itemGroup:last'));
+            $('.itemGroup:last').addClass(`level${level+1}`);
             $('.groupName:last').val(item.name);
             if(typeof item.items != "undefined") {
                 item.items.forEach(function(subItem) {
-                    readAddMenu(subItem,++level);
+                    readAddMenu(subItem,level+1);
                 }) 
             }
             break;
@@ -271,7 +273,7 @@ function readAddMenu(item,level=0) {
             if (level == 0) {
                 $('#addLink').click();
             } else {
-                $('.addLink:last').click();
+                $(`.itemGroup.level${level}:last`).find('.addLink').click();
             }
             $('.linkName:last').val(item.name);
             $('.linkPage:last').val(item.page);
@@ -280,7 +282,7 @@ function readAddMenu(item,level=0) {
             if (level == 0) {
                 $('#addPage').click();
             } else {
-                $('.addPage:last').click();
+                $(`.itemGroup.level${level}:last`).find('.addPage').click();
             }
             $('.pageName:last').val(item.name);
             $('.pagePage:last').dropdown('set selected', item.page);

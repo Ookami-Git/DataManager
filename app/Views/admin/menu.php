@@ -16,7 +16,7 @@
 
 <template id="tpl_page">
     <div class="item">
-        <i class="large file middle aligned icon"></i>
+        <i class="large <?=themeClass?> file middle aligned icon"></i>
         <div class="content">
             <div class="header">
                 <div class="ui <?=themeClass?> compact mini basic icon buttons">
@@ -74,7 +74,7 @@
 
 <template id="tpl_link">
     <div class="item">
-        <i class="large linkify middle aligned icon"></i>
+        <i class="large <?=themeClass?> linkify middle aligned icon"></i>
         <div class="content">
             <div class="header">
                 <div class="ui <?=themeClass?> compact mini basic icon buttons">
@@ -97,7 +97,7 @@
 
 <template id="tpl_group">
     <div class="item itemGroup">
-        <i class="large folder middle aligned icon"></i>
+        <i class="large <?=themeClass?> folder middle aligned icon"></i>
         <div class="content">
             <div class="header">
                 <div class="ui <?=themeClass?> compact mini basic icon buttons">
