@@ -105,10 +105,10 @@ function alter_order(button,direction,parenttype) {
     var obj_to_move=button.closest(parenttype);
     switch (direction) {
         case "down":
-            obj_to_move.insertAfter(obj_to_move.next(parenttype));
+            obj_to_move.insertAfter(obj_to_move.next(parenttype)).hide().show('slow');
             break;
         case "up":
-            obj_to_move.insertBefore(obj_to_move.prev(parenttype));
+            obj_to_move.insertBefore(obj_to_move.prev(parenttype)).hide().show('slow');
             break;
     }
 }
