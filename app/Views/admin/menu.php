@@ -118,9 +118,9 @@
             </div>
             <br>
             <div class="ui <?=themeClass?> basic buttons">
-                <div class="ui <?=themeClass?> compact icon button addPage" onclick="genericAdd($(this),'.itemGroup','.groupContent','#tpl_page',false,parentGrpPath($(this)));"><i class="file icon"></i></div>
-                <div class="ui <?=themeClass?> compact icon button addLink" onclick="genericAdd($(this),'.itemGroup','.groupContent','#tpl_link',false,parentGrpPath($(this)));"><i class="linkify icon"></i></div>
-                <div class="ui <?=themeClass?> compact icon button addGrp" onclick="genericAdd($(this),'.itemGroup','.groupContent','#tpl_group',false,parentGrpPath($(this)));"><i class="folder icon"></i></div>
+                <div class="ui <?=themeClass?> compact icon button addPage" onclick="genericAdd($(this),'.itemGroup','.groupContent:first','#tpl_page',false,parentGrpPath($(this)));"><i class="file icon"></i></div>
+                <div class="ui <?=themeClass?> compact icon button addLink" onclick="genericAdd($(this),'.itemGroup','.groupContent:first','#tpl_link',false,parentGrpPath($(this)));"><i class="linkify icon"></i></div>
+                <div class="ui <?=themeClass?> compact icon button addGrp" onclick="genericAdd($(this),'.itemGroup','.groupContent:first','#tpl_group',false,parentGrpPath($(this)));"><i class="folder icon"></i></div>
             </div>
         </div>
     </div>

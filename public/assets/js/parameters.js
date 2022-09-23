@@ -258,9 +258,9 @@ function readAddMenu(item,level=0) {
             if (level == 0) {
                 $('#addGrp').click();
             } else {
-                $(`.itemGroup.level${level}:last`).find('.addGrp').click();
+                console.log($(`.itemGroup.level${level}:last`).find('.addGrp:last'));
+                $(`.itemGroup.level${level}:last`).find('.addGrp:last').click();
             }
-            console.log($('.itemGroup:last'));
             $('.itemGroup:last').addClass(`level${level+1}`);
             $('.groupName:last').val(item.name);
             if(typeof item.items != "undefined") {
@@ -273,7 +273,7 @@ function readAddMenu(item,level=0) {
             if (level == 0) {
                 $('#addLink').click();
             } else {
-                $(`.itemGroup.level${level}:last`).find('.addLink').click();
+                $(`.itemGroup.level${level}:last`).find('.addLink:last').click();
             }
             $('.linkName:last').val(item.name);
             $('.linkPage:last').val(item.page);
@@ -282,7 +282,7 @@ function readAddMenu(item,level=0) {
             if (level == 0) {
                 $('#addPage').click();
             } else {
-                $(`.itemGroup.level${level}:last`).find('.addPage').click();
+                $(`.itemGroup.level${level}:last`).find('.addPage:last').click();
             }
             $('.pageName:last').val(item.name);
             $('.pagePage:last').dropdown('set selected', item.page);
